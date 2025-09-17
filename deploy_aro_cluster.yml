@@ -1,0 +1,137 @@
+---
+- name: Deploy Azure Red Hat OpenShift (ARO) Cluster
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    # --- Customize these variables for your environment ---
+    resource_group: "shsingh-demo"
+    location: "centralindia"
+    cluster_name: "myarocluster"
+    
+    # Networking
+    vnet_name: "ARO-VNet"
+    vnet_address_prefix: "10.0.0.0/22"
+    master_subnet_name: "master-subnet"
+    master_subnet_prefix: "10.0.0.0/23"
+    worker_subnet_name: "worker-subnet"
+    worker_subnet_prefix: "10.0.2.0/23"
+    
+    # Cluster Configuration
+    domain: "myaroclusterdomain" # A unique domain name prefix
+    vm_size_master: "Standard_D8s_v3"
+    vm_size_worker: "Standard_D4s_v3"
+    worker_node_count: 3
+    
+    # Sensitive Data - Use Ansible Vault for production
+    pull_secret: '@pull-secret.txt' # Path to your pull secret file
+
+  tasks:
+    - name: 1. Create a resource group
+      azure.azcollection.azure_rm_resourcegroup:
+        name: "{{ resource_group }}"
+        location: "{{ location }}"
+
+    - name: 2. Create a virtual network (VNet)
+      azure.azcollection.azure_rm_virtualnetwork:
+        resource_group: "{{ resource_group }}"
+        name: "{{ vnet_name }}"
+        address_prefixes: "{{ vnet_address_prefix }}"
+
+    - name: 3. Create a subnet for master nodes
+      azure.azcollection.azure_rm_subnet:
+        resource_group: "{{ resource_group }}"
+        name: "{{ master_subnet_name }}"
+        virtual_network: "{{ vnet_name }}"
+        address_prefix: "{{ master_subnet_prefix }}"
+        # Disable private link service network policies for the master subnet
+        service_endpoints:
+          - name: Microsoft.ContainerRegistry
+        private_endpoint_network_policies: "Disabled"
+
+    - name: 4. Create a subnet for worker nodes
+      azure.azcollection.azure_rm_subnet:
+        resource_group: "{{ resource_group }}"
+        name: "{{ worker_subnet_name }}"
+        virtual_network: "{{ vnet_name }}"
+        address_prefix: "{{ worker_subnet_prefix }}"
+        # Disable private link service network policies for the worker subnet
+        service_endpoints:
+          - name: Microsoft.ContainerRegistry
+        private_link_service_network_policies: "Disabled"
+
+#    - name: 5. Deploy the ARO cluster 🚀
+#      # This task uses the 'azure_rm_openshiftcluster' module from the 'azure.azcollection'.
+#      # Its job is to create, manage, or delete an Azure Red Hat OpenShift (ARO) cluster.
+#      azure.azcollection.azure_rm_openshiftcluster:
+#        # Specifies the name of the Azure Resource Group where the ARO cluster resource itself will be created.
+#        # This is the same resource group created in Task 1.
+#        resource_group: "{{ resource_group }}"
+#        
+#        # The desired name for your ARO cluster.
+#        name: "{{ cluster_name }}"
+#        
+#        # The Azure region (e.g., 'eastus') where the cluster will be deployed.
+#        location: "{{ location }}"
+#        
+#        # 'state: present' tells Ansible to ensure the cluster exists with this configuration.
+#        # If it doesn't exist, Ansible will create it. If it exists, no changes are made.
+#        state: present
+#        
+#        # --- Cluster-wide configuration settings ---
+#        cluster_profile:
+#          # A unique domain prefix for your cluster. The API and app routes will be based on this.
+#          # Example: console.eastus.myaroclusterdomain.aroapp.io
+#          domain: "{{ domain }}"
+#          
+#          # The full Azure Resource ID for the resource group where the cluster's VMs, disks, and other
+#          # infrastructure will be deployed. This is often a separate, managed resource group.
+#          # We are using the main resource group for simplicity here.
+#          resource_group_id: "/subscriptions/{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}/resourceGroups/{{ resource_group }}"
+#        
+#        # --- Networking configuration for the cluster's internal network ---
+#        network_profile:
+#          # The internal IP address range for the Pods running inside the cluster.
+#          pod_cidr: "10.128.0.0/14"
+#          
+#          # The internal IP address range for the Services (like ClusterIPs) inside the cluster.
+#          service_cidr: "172.30.0.0/16"
+#        
+#        # --- Configuration for the master (control plane) nodes ---
+#        master_profile:
+#          # Defines the Azure VM size (e.g., 'Standard_D8s_v3') for the master nodes.
+#          vm_size: "{{ vm_size_master }}"
+#          
+#          # The full Azure Resource ID of the subnet where the master nodes will be placed.
+#          # This links the masters to the 'master-subnet' created in Task 3.
+#          subnet_id: "/subscriptions/{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}/resourceGroups/{{ resource_group }}/providers/Microsoft.Network/virtualNetworks/{{ vnet_name }}/subnets/{{ master_subnet_name }}"
+#        
+#        # --- Configuration for the worker (compute) nodes ---
+#        # This is a list, allowing for multiple worker pools with different configurations if needed.
+#        worker_profiles:
+#          - name: "worker"  # The name of this worker pool.
+#            vm_size: "{{ vm_size_worker }}"  # Azure VM size for the worker nodes.
+#            disk_size_gb: 128  # The size of the operating system disk for each worker node.
+#            count: "{{ worker_node_count }}"  # The number of worker nodes to create in this pool.
+#            
+#            # The full Azure Resource ID of the subnet where the worker nodes will be placed.
+#            # This links the workers to the 'worker-subnet' created in Task 4.
+#            subnet_id: "/subscriptions/{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}/resourceGroups/{{ resource_group }}/providers/Microsoft.Network/virtualNetworks/{{ vnet_name }}/subnets/{{ worker_subnet_name }}"
+#        
+#        # --- Public access configuration ---
+#        # Defines the visibility of the cluster's Kubernetes API server.
+#        # 'Public' means it can be accessed from the internet.
+#        apiserver_profile:
+#          visibility: "Public"
+#        
+#        # Defines the visibility for the default ingress controller (router).
+#        # 'Public' means applications exposed via routes will be accessible from the internet.
+#        ingress_profiles:
+#          - name: "default"
+#            visibility: "Public"
+#            
+#        # Your Red Hat pull secret, which is required to download OpenShift container images.
+#        # The `lookup('file', ...)` function reads the content directly from the 'pull-secret.txt' file.
+#        # This is a secure practice to avoid pasting the secret directly into your playbook.
+#        pull_secret: "{{ lookup('file', pull_secret) }}"
