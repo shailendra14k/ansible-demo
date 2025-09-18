@@ -29,7 +29,7 @@ spec:
     - id: trigger-ansible-job
       name: Launch ARO Deployment Job in AAP
       # This action makes a REST API call to your AAP instance.
-      action: http:request:dynamic
+      action: http:backstage:request
       input:
         provider: aap
         path: 'job_templates/123/launch/'
