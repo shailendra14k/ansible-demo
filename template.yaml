@@ -23,6 +23,11 @@ spec:
           type: integer
           description: The number of worker nodes for the cluster.
           default: 3
+        template:
+          title: Template ID
+          type: integer
+          description: A unique name for the ARO cluster (e.g., my-team-aro-cluster).
+          default: 7
         token:
           title: Token
           type: string
@@ -42,4 +47,4 @@ spec:
         token: ${{ parameters.token }}
         values:
           template:
-            id: 9
+            id: ${{ parameters.template }}
