@@ -33,6 +33,7 @@ spec:
       input:
         provider: aap
         path: 'job_templates/9/launch/'
+        baseUrl: 'https://demo-aap.apps.shailendra14k.in/api/v2/'
         method: 'POST'
         body:
           extra_vars:
