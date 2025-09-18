@@ -29,13 +29,7 @@ spec:
     - id: trigger-ansible-job
       name: Launch ARO Deployment Job in AAP
       # This action makes a REST API call to your AAP instance.
-      action: ansible:job:run
+      action: rhaap:launch-job-template
       input:
-        provider: aap
-        path: 'https://demo-aap.apps.shailendra14k.in/api/v2/job_templates/9/launch/'
-        baseUrl: 'https://demo-aap.apps.shailendra14k.in/api/v2/'
-        method: 'POST'
-        body:
-          extra_vars:
-            cluster_name: ${{ parameters.cluster_name }}
-            worker_node_count: ${{ parameters.worker_node_count }}
+        values:
+          template:'deploy aro'
