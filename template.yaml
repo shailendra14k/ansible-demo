@@ -41,4 +41,4 @@ spec:
       input:
         token: ${{ parameters.token }}
         values:
-          template: 9
+          templateName: 'deploy aro'
