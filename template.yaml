@@ -43,6 +43,9 @@ spec:
         values:
           templateName: 'Self Service Job Template'
           templateDescription: 'Self Service Job Template'
+          project: 'aro-deploy'
+          jobInventory: 'Demo Inventory'
+          playbook: 'deploy_aro_cluster.yml'
     - id: trigger-ansible-job
       name: Launch ARO Deployment Job in AAP
       # This action makes a REST API call to your AAP instance.
