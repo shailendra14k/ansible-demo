@@ -31,7 +31,7 @@ spec:
       # This action makes a REST API call to your AAP instance.
       action: http:backstage:request
       input:
-        provider: aap1
+        provider: aap
         path: 'job_templates/9/launch/'
         method: 'POST'
         body:
