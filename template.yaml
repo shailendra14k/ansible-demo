@@ -31,9 +31,13 @@ spec:
       # This action makes a REST API call to your AAP instance.
       action: http:backstage:request
       input:
-        provider: aap
-        path: 'job_templates/123/launch/'
         method: 'POST'
+        url: 'https://demo-aap.apps.shailendra14k.in/api/v2/job_templates/9/launch/'
+        method: 'POST'
+        headers:
+          Content-Type: 'application/json'
+          # This will read the AAP_TOKEN env var you configured in the Backstage CR.
+          Authorization: 'Bearer ${AAP_TOKEN}'
         body:
           extra_vars:
             cluster_name: ${{ parameters.cluster_name }}
