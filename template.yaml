@@ -23,6 +23,14 @@ spec:
           type: integer
           description: The number of worker nodes for the cluster.
           default: 3
+        token:
+          title: Token
+          type: string
+          description: Oauth2 token
+          ui:field: AAPTokenField
+          ui:backstage:
+            review:
+              show: false
 
   # This section defines the actions to run after the form is submitted.
   steps:
@@ -31,5 +39,6 @@ spec:
       # This action makes a REST API call to your AAP instance.
       action: rhaap:launch-job-template
       input:
+        token: ${{ parameters.token }}
         values:
-          template:'deploy aro'
+          template: 9
