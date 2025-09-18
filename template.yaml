@@ -41,4 +41,5 @@ spec:
       input:
         token: ${{ parameters.token }}
         values:
-          template: 9
+          template:
+            id: 9
