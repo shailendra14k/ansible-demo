@@ -29,17 +29,11 @@ spec:
     - id: trigger-ansible-job
       name: Launch ARO Deployment Job in AAP
       # This action makes a REST API call to your AAP instance.
-      action: http:request
+      action: http:request:dynamic
       input:
+        provider: aap
+        path: 'job_templates/123/launch/'
         method: 'POST'
-        # --- YOU MUST EDIT THIS URL ---
-        # Replace 'YOUR_AAP_HOST' and the job template ID '123'.
-        url: 'https://demo-aap.apps.shailendra14k.in/execution/templates/job-template/9/launch/'
-        headers:
-          Content-Type: 'application/json'
-          # This securely reads the token from your Backstage config.
-          Authorization: 'Bearer {{ config.secrets.AAP_TOKEN }}'
-        # This sends the developer's form inputs as 'extra_vars' to the Ansible job.
         body:
           extra_vars:
             cluster_name: ${{ parameters.cluster_name }}
