@@ -48,9 +48,3 @@ spec:
         values:
           template:
             id: ${{ parameters.template }}
-    - id: register
-      name: Registering the Catalog Info Component
-      action: catalog:register
-      input:
-        repoContentsUrl: 'test.com'
-        catalogInfoPath: /catalog-info.yaml
