@@ -1,0 +1,46 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: create-aro-cluster
+  title: Create an Azure Red Hat OpenShift (ARO) Cluster
+  description: A self-service template to provision a new ARO cluster using Ansible.
+spec:
+  owner: platform-team
+  type: service
+
+  # This section defines the web form for the developer.
+  parameters:
+    - title: Cluster Configuration
+      required:
+        - cluster_name
+      properties:
+        cluster_name:
+          title: Cluster Name
+          type: string
+          description: A unique name for the ARO cluster (e.g., my-team-aro-cluster).
+        worker_node_count:
+          title: Number of Worker Nodes
+          type: integer
+          description: The number of worker nodes for the cluster.
+          default: 3
+
+  # This section defines the actions to run after the form is submitted.
+  steps:
+    - id: trigger-ansible-job
+      name: Launch ARO Deployment Job in AAP
+      # This action makes a REST API call to your AAP instance.
+      action: http:request
+      input:
+        method: 'POST'
+        # --- YOU MUST EDIT THIS URL ---
+        # Replace 'YOUR_AAP_HOST' and the job template ID '123'.
+        url: 'https://demo-aap.apps.shailendra14k.in/execution/templates/job-template/9/launch/'
+        headers:
+          Content-Type: 'application/json'
+          # This securely reads the token from your Backstage config.
+          Authorization: 'Bearer {{ config.secrets.AAP_TOKEN }}'
+        # This sends the developer's form inputs as 'extra_vars' to the Ansible job.
+        body:
+          extra_vars:
+            cluster_name: ${{ parameters.cluster_name }}
+            worker_node_count: ${{ parameters.worker_node_count }}
