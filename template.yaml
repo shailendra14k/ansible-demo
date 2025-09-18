@@ -34,18 +34,6 @@ spec:
 
   # This section defines the actions to run after the form is submitted.
   steps:
-    - id: create-template
-      name: Create job template
-      action: rhaap:create-job-template
-      input:
-        token: ${{ parameters.token }}
-        deleteIfExist: true
-        values:
-          templateName: 'Self Service Job Template'
-          templateDescription: 'Self Service Job Template'
-          project: 'aro-deploy'
-          jobInventory: 'Demo Inventory'
-          playbook: 'deploy_aro_cluster.yml'
     - id: trigger-ansible-job
       name: Launch ARO Deployment Job in AAP
       # This action makes a REST API call to your AAP instance.
@@ -53,4 +41,4 @@ spec:
       input:
         token: ${{ parameters.token }}
         values:
-          template: ${{steps['create-template'].output.template}}
+          template: 9
