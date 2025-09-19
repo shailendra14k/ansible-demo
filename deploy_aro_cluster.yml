@@ -47,7 +47,7 @@
         address_prefix: "{{ master_subnet_prefix }}"
         # Disable private link service network policies for the master subnet
         service_endpoints:
-          - name: Microsoft.ContainerRegistry
+          - service: Microsoft.ContainerRegistry
         private_endpoint_network_policies: "Disabled"
 
     - name: 4. Create a subnet for worker nodes
@@ -58,7 +58,7 @@
         address_prefix: "{{ worker_subnet_prefix }}"
         # Disable private link service network policies for the worker subnet
         service_endpoints:
-          - name: Microsoft.ContainerRegistry
+          - service: Microsoft.ContainerRegistry
         private_link_service_network_policies: "Disabled"
 
 #    - name: 5. Deploy the ARO cluster 🚀
