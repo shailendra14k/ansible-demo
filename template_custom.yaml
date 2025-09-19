@@ -4,7 +4,7 @@ metadata:
   name: dot-net-app
   title:  Dot Net - Test Case generation through AI
   description: A .NET-based application showcasing AI-powered automated test case generation. The project demonstrates how artificial intelligence can be used to analyze application logic, generate comprehensive unit and integration test cases, and improve test coverage. It also integrates with modern CI/CD pipelines to ensure continuous testing, quality validation, and faster delivery
-  tags: ["DotNet", "AI", "IndiGo", "sbom", "acs"]
+  tags: ["dotnet", "AI", "indigo", "sbom", "acs"]
 spec:
   type: service
   # These parameters are used to generate the input form in the frontend, and are
