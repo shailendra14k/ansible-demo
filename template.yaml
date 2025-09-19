@@ -52,3 +52,32 @@ spec:
         values:
           template:
             id: ${{ parameters.template }}
+    - id: create-catalog-info
+      name: Create Catalog Info
+      action: roadiehq:utils:templater
+      input:
+        template:
+          apiVersion: backstage.io/v1alpha1
+          kind: Resource
+          metadata:
+            name: ${{ parameters.clusterName }}
+            description: Azure Red Hat OpenShift cluster
+            annotations:
+              'backstage.io/kubernetes-id': ${{ parameters.clusterName }}
+          spec:
+            type: kubernetes-cluster
+            owner: ${{ parameters.owner }}
+        outputPath: ${{ workspacePath }}/catalog-info.yaml
+
+    # Step 4: Register the new cluster in the Backstage catalog
+    - id: register
+      name: Registering Cluster Resource
+      action: catalog:register
+      input:
+        catalogInfoPath: ${{ steps['create-catalog-info'].output.outputPath }}
+
+  # 3. OUTPUT: Link to the newly created resource page
+  output:
+    links:
+      - title: View ARO Cluster in Catalog
+        url: ${{ steps.register.output.entityRef | entityRefToUrl }}
