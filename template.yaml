@@ -85,7 +85,7 @@ spec:
       action: catalog:register
       input:
         repoUrl: ${{ steps['fetch-skeleton'].output.remoteUrl }}
-        catalogInfoPath: /catalog-info.yaml
+        catalogInfoPath: ./provision-vm-skeleton/catalog-info.yaml.njk
 
   # 3. OUTPUT: Link to the newly created resource page
   output:
