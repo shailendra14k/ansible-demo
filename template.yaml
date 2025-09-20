@@ -84,7 +84,7 @@ spec:
       name: Registering Resource
       action: catalog:register
       input:
-        repoContentsUrl: ${{ steps['fetch-skeleton'].input.url }}
+        repoContentsUrl: https://github.com/shailendra14k/ansible-demo.git
         catalogInfoPath: /catalog-info.yaml
 
   # 3. OUTPUT: Link to the newly created resource page
