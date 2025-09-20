@@ -76,7 +76,7 @@ spec:
       name: Registering Resource
       action: catalog:register
       input:
-        catalogInfoPath: ${{ steps['create-catalog-info'].output.path }}
+        catalogInfoUrl: file://${{ steps['create-catalog-info'].output.path }}
 
   # 3. OUTPUT: Link to the newly created resource page
   output:
