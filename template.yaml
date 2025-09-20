@@ -54,7 +54,7 @@ spec:
             id: ${{ parameters.template }}
     - id: create-catalog-info
       name: Create Catalog Info
-      action: fs:write # Using the built-in action is sufficient here
+      action: roadiehq:utils:fs:write # Using the built-in action is sufficient here
       input:
         path: catalog-info.yaml 
         content: |
