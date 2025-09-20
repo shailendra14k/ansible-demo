@@ -54,20 +54,18 @@ spec:
             id: ${{ parameters.template }}
     - id: create-catalog-info
       name: Create Catalog Info
-      action: roadiehq:utils:templater
+      action: roadiehq:utils:fs:write
       input:
-        template:
+        path: ${{ workspacePath }}/catalog-info.yaml
+        content: |
           apiVersion: backstage.io/v1alpha1
           kind: Resource
           metadata:
-            name: ${{ parameters.clusterName }}
-            description: Azure Red Hat OpenShift cluster
-            annotations:
-              'backstage.io/kubernetes-id': ${{ parameters.clusterName }}
+            name: DemoVM
+            description: SQL Server running on Azure VM
           spec:
-            type: kubernetes-cluster
-            owner: ${{ parameters.owner }}
-        outputPath: ${{ workspacePath }}/catalog-info.yaml
+            type: database
+            owner: test
 
     # Step 4: Register the new cluster in the Backstage catalog
     - id: register
