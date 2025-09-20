@@ -84,7 +84,7 @@ spec:
       name: Registering Resource
       action: catalog:register
       input:
-        repoContentsUrl: https://raw.githubusercontent.com/shailendra14k/ansible-demo/refs/heads/main/
+        repoContentsUrl: https://github.com/shailendra14k/ansible-demo/blob/main
         catalogInfoPath: /catalog-info.yaml
 
   # 3. OUTPUT: Link to the newly created resource page
