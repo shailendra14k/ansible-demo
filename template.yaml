@@ -56,7 +56,7 @@ spec:
       name: Create Catalog Info
       action: roadiehq:utils:fs:write # Using the built-in action is sufficient here
       input:
-        path: catalog-info.yaml 
+        path: /tmp/catalog-info.yaml 
         content: |
           apiVersion: backstage.io/v1alpha1
           kind: Resource
