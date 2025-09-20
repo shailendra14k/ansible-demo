@@ -71,7 +71,6 @@ spec:
       action: debug:log
       input:
         message: 'PR url: ${{ steps['create-catalog-info'].output.path }}'
-
     - id: register
       name: Registering Resource
       action: catalog:register
