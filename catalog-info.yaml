@@ -1,0 +1,8 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: DemoVM
+  description: SQL Server running on Azure VM
+spec:
+  type: database
+  owner: test
