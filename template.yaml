@@ -54,9 +54,9 @@ spec:
             id: ${{ parameters.template }}
     - id: create-catalog-info
       name: Create Catalog Info
-      action: roadiehq:utils:fs:write
+      action: fs:write # Using the built-in action is sufficient here
       input:
-        path: ${{ workspacePath }}/catalog-info.yaml
+        path: catalog-info.yaml 
         content: |
           apiVersion: backstage.io/v1alpha1
           kind: Resource
@@ -67,12 +67,11 @@ spec:
             type: database
             owner: test
 
-    # Step 4: Register the new cluster in the Backstage catalog
     - id: register
-      name: Registering Cluster Resource
+      name: Registering Resource
       action: catalog:register
       input:
-        catalogInfoPath: ${{ steps['create-catalog-info'].output.outputPath }}
+        catalogInfoPath: /catalog-info.yaml
 
   # 3. OUTPUT: Link to the newly created resource page
   output:
