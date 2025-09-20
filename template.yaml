@@ -43,6 +43,14 @@ spec:
 
   # This section defines the actions to run after the form is submitted.
   steps:
+    - id: fetch-skeleton
+      name: Fetch Skeleton
+      action: fetch:template
+      input:
+        url: ./provision-vm-skeleton # Relative path to your skeleton directory
+        values: # Pass all parameters needed by the .njk files
+          vmName: test
+          owner: shailendra
     - id: trigger-ansible-job
       name: Launch ARO Deployment Job in AAP
       # This action makes a REST API call to your AAP instance.
@@ -76,7 +84,7 @@ spec:
       name: Registering Resource
       action: catalog:register
       input:
-        catalogInfoUrl: file://${{ steps['create-catalog-info'].output.path }}
+        catalogInfoPath: /catalog-info.yaml
 
   # 3. OUTPUT: Link to the newly created resource page
   output:
