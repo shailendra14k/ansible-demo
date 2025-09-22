@@ -1,0 +1,13 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: demo-all
+  description: Dance Language Samples
+spec:
+  targets:
+    - ./templates/template_custom.yaml  
+    - ./templates/template_rhel.yaml    
+    - ./templates/template_sql.yaml     
+    - ./templates/template_windows.yaml 
+    - ./templates/template.yaml         
+    - ./templates/templete_np.yaml
