@@ -80,12 +80,6 @@ spec:
       action: debug:log
       input:
         message: The skeleton was fetched from t ----- ${{ steps['fetch-skeleton'].input.url }}
-    - id: register
-      name: Registering Resource
-      action: catalog:register
-      input:
-        repoContentsUrl: https://github.com/shailendra14k/ansible-demo/blob/main
-        catalogInfoPath: /catalog-info.yaml
 
   # 3. OUTPUT: Link to the newly created resource page
   output:
