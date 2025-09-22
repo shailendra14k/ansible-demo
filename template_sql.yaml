@@ -22,7 +22,7 @@ spec:
         cluster_name:
           title: Cluster Name
           type: string
-          description: A unique name for the ARO cluster (e.g., my-team-aro-cluster).
+          description: A unique name for the SQL Server  (e.g., my-team-sql-cluster).
         worker_node_count:
           title: Number of Worker Nodes
           type: integer
@@ -31,7 +31,7 @@ spec:
         template:
           title: Template ID
           type: integer
-          description: A unique name for the ARO cluster (e.g., my-team-aro-cluster).
+          description: Ansible Template JOB ID
           default: 7
         token:
           title: Token
@@ -53,7 +53,7 @@ spec:
           vmName: test
           owner: shailendra
     - id: trigger-ansible-job
-      name: Launch ARO Deployment Job in AAP
+      name: Launch SQL Server Deployment Job in AAP
       # This action makes a REST API call to your AAP instance.
       action: rhaap:launch-job-template
       input:
@@ -76,5 +76,5 @@ spec:
   # 3. OUTPUT: Link to the newly created resource page
   output:
     links:
-      - title: View ARO Cluster in Catalog
+      - title: View SQL Server Cluster in Catalog
         url: ${{ steps.register.output.entityRef | entityRefToUrl }}
