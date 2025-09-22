@@ -1,0 +1,15 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: Demo-ARO-non-prod 
+  description: Azure Red Hat OpenShift (ARO) Cluster  
+  links:
+    - url: https://www.redhat.com/en/technologies/cloud-computing/openshift/azure
+      title: Azure Red Hat OpenShift
+      icon: dashboard
+      type: admin-dashboard
+  tags: ["indigo", "aro", "ansible"] 
+spec:
+  type: service
+  owner: indigo-cop-team
+  lifecycle: non-prod
