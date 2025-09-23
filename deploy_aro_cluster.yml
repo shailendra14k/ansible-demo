@@ -39,27 +39,27 @@
         name: "{{ vnet_name }}"
         address_prefixes: "{{ vnet_address_prefix }}"
 
-    - name: 3. Create a subnet for master nodes
-      azure.azcollection.azure_rm_subnet:
-        resource_group: "{{ resource_group }}"
-        name: "{{ master_subnet_name }}"
-        virtual_network: "{{ vnet_name }}"
-        address_prefix: "{{ master_subnet_prefix }}"
+  #  - name: 3. Create a subnet for master nodes
+  #    azure.azcollection.azure_rm_subnet:
+  #      resource_group: "{{ resource_group }}"
+  #      name: "{{ master_subnet_name }}"
+  #      virtual_network: "{{ vnet_name }}"
+  #      address_prefix: "{{ master_subnet_prefix }}"
         # Disable private link service network policies for the master subnet
-        service_endpoints:
-          - service: Microsoft.ContainerRegistry
-        private_endpoint_network_policies: "Disabled"
+  #      service_endpoints:
+  #        - service: Microsoft.ContainerRegistry
+  #      private_endpoint_network_policies: "Disabled"
 
-    - name: 4. Create a subnet for worker nodes
-      azure.azcollection.azure_rm_subnet:
-        resource_group: "{{ resource_group }}"
-        name: "{{ worker_subnet_name }}"
-        virtual_network: "{{ vnet_name }}"
-        address_prefix: "{{ worker_subnet_prefix }}"
-        # Disable private link service network policies for the worker subnet
-        service_endpoints:
-          - service: Microsoft.ContainerRegistry
-        private_link_service_network_policies: "Disabled"
+  #  - name: 4. Create a subnet for worker nodes
+  #    azure.azcollection.azure_rm_subnet:
+  #      resource_group: "{{ resource_group }}"
+  #      name: "{{ worker_subnet_name }}"
+  #      virtual_network: "{{ vnet_name }}"
+  #      address_prefix: "{{ worker_subnet_prefix }}"
+  #      # Disable private link service network policies for the worker subnet
+  #      service_endpoints:
+  #        - service: Microsoft.ContainerRegistry
+  #      private_link_service_network_policies: "Disabled"
 
 #    - name: 5. Deploy the ARO cluster 🚀
 #      # This task uses the 'azure_rm_openshiftcluster' module from the 'azure.azcollection'.
