@@ -1,1 +1,15 @@
-
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: Demo-IndigoEE
+  description: SQL Server Production  
+  links:
+    - url: https://www.redhat.com/en/technologies/cloud-computing/openshift/azure
+      title: Azure Red Hat OpenShift
+      icon: dashboard
+      type: admin-dashboard
+  tags: ["indigo", "sql", "ansible", "developer"] 
+spec:
+  type: service
+  owner: indigo-cop-team
+  lifecycle: prod
