@@ -1,5 +1,5 @@
 ---
-- name: Deploy Azure Red Hat OpenShift (ARO) Cluster
+- name: Deploy SQL Server on Azure VM
   hosts: localhost
   connection: local
   gather_facts: false
@@ -11,7 +11,7 @@
     cluster_name: "myarocluster"
     
     # Networking
-    vnet_name: "ARO-VNet"
+    vnet_name: "SQL-VNet"
     vnet_address_prefix: "10.0.0.0/22"
     master_subnet_name: "master-subnet"
     master_subnet_prefix: "10.0.0.0/23"
