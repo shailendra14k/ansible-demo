@@ -71,7 +71,7 @@ spec:
       action: catalog:register
       input:
         repoContentsUrl: https://github.com/shailendra14k/ansible-demo/blob/main
-        catalogInfoPath: /catalog-info.yaml
+        catalogInfoPath: /catalog_3.yaml
 
   # 3. OUTPUT: Link to the newly created resource page
   output:
