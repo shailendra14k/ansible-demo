@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: create-sql-cluster
-  title: Create an SQL Server on Azure VMs
+  title: Create an SQL Server
   description: A self-service template to provision a new SQL cluster using Ansible.
   tags:
     - recommended
