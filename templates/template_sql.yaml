@@ -24,7 +24,7 @@ spec:
           type: string
           description: A unique name for the SQL Server  (e.g., my-team-sql-cluster).
         worker_node_count:
-          title: Number of Worker Nodes
+          title: Number of Nodes
           type: integer
           description: The number of worker nodes for the cluster.
           default: 3
@@ -32,7 +32,7 @@ spec:
           title: Template ID
           type: integer
           description: Ansible Template JOB ID
-          default: 7
+          default: 20
         token:
           title: Token
           type: string
